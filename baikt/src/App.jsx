@@ -1,17 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function App() {
   const [search, setSearch] = useState('');
   const [selectedClass, setSelectedClass] = useState('');
-  const [students, setStudents] = useState([
-    { id: 1, ten: 'Nguyễn Văn A', lop: 'CNTT1', tuoi: 20 },
-    { id: 2, ten: 'Trần Thị B', lop: 'KTPM2', tuoi: 21 },
-    { id: 3, ten: 'Lê Văn C', lop: 'CNTT1', tuoi: 22 },
-  ]);
-
+  const [students, setStudents] = useState([]);
   const [form, setForm] = useState({ ten: '', lop: '', tuoi: '' });
   const [editingId, setEditingId] = useState(null);
   const [newStudent, setNewStudent] = useState({ ten: '', lop: '', tuoi: '' });
+
+  // Tải danh sách sinh viên từ localStorage khi trang được tải lại
+  useEffect(() => {
+    const storedStudents = localStorage.getItem('students');
+    if (storedStudents) {
+      setStudents(JSON.parse(storedStudents));
+    }
+  }, []);
+
+  // Đồng bộ danh sách sinh viên vào localStorage khi danh sách thay đổi
+  useEffect(() => {
+    if (students.length > 0) {
+      localStorage.setItem('students', JSON.stringify(students));
+    }
+  }, [students]);
 
   const handleChangeNew = (e) => {
     setNewStudent({ ...newStudent, [e.target.name]: e.target.value });
