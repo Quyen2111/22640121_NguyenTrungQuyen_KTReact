@@ -115,13 +115,13 @@ function App() {
         />
         <button
           onClick={handleAdd}
-          className="w-full md:w-auto bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition duration-200"
+          className="w-full md:w-auto bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition duration-200"
         >
           Thêm sinh viên
         </button>
       </div>
 
-      <div className="overflow-x-auto bg-white rounded-lg shadow-lg">
+      <div className="w-full table-auto border border-gray-300 shadow-lg rounded-lg">
 
         <table className="min-w-full table-auto">
           <thead>
