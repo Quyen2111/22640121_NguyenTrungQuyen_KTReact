@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import StudentItem from './components/StudentItem';
 
 function App() {
   const [search, setSearch] = useState('');
@@ -8,15 +9,15 @@ function App() {
   const [editingId, setEditingId] = useState(null);
   const [newStudent, setNewStudent] = useState({ ten: '', lop: '', tuoi: '' });
 
-  // Tải danh sách sinh viên từ localStorage khi trang được tải lại
   useEffect(() => {
     const storedStudents = localStorage.getItem('students');
     if (storedStudents) {
       setStudents(JSON.parse(storedStudents));
+    } else {
+      setStudents([]);
     }
   }, []);
 
-  // Đồng bộ danh sách sinh viên vào localStorage khi danh sách thay đổi
   useEffect(() => {
     if (students.length > 0) {
       localStorage.setItem('students', JSON.stringify(students));
@@ -131,67 +132,15 @@ function App() {
         </thead>
         <tbody>
           {filteredStudents.map(student => (
-            <tr key={student.id} className="border-t">
-              {editingId === student.id ? (
-                <>
-                  <td className="p-2">
-                    <input
-                      type="text"
-                      name="ten"
-                      value={form.ten}
-                      onChange={handleEditChange}
-                      className="border p-1 rounded w-full"
-                    />
-                  </td>
-                  <td className="p-2">
-                    <input
-                      type="text"
-                      name="lop"
-                      value={form.lop}
-                      onChange={handleEditChange}
-                      className="border p-1 rounded w-full"
-                    />
-                  </td>
-                  <td className="p-2">
-                    <input
-                      type="number"
-                      name="tuoi"
-                      value={form.tuoi}
-                      onChange={handleEditChange}
-                      className="border p-1 rounded w-full"
-                    />
-                  </td>
-                  <td className="p-2">
-                    <button
-                      onClick={() => saveEdit(student.id)}
-                      className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 mr-2"
-                    >
-                      Lưu
-                    </button>
-                  </td>
-                </>
-              ) : (
-                <>
-                  <td className="p-3">{student.ten}</td>
-                  <td className="p-3">{student.lop}</td>
-                  <td className="p-3">{student.tuoi}</td>
-                  <td className="p-3 space-x-2">
-                    <button
-                      onClick={() => startEdit(student)}
-                      className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
-                    >
-                      Sửa
-                    </button>
-                    <button
-                      onClick={() => handleDelete(student.id)}
-                      className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-                    >
-                      Xoá
-                    </button>
-                  </td>
-                </>
-              )}
-            </tr>
+            <StudentItem
+              key={student.id}
+              student={student}
+              onEdit={startEdit}
+              onDelete={handleDelete}
+              isEditing={editingId === student.id}
+              onSave={saveEdit}
+              onEditChange={handleEditChange}
+            />
           ))}
         </tbody>
       </table>
