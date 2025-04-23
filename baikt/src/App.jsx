@@ -64,22 +64,22 @@ function App() {
   );
 
   return (
-    <div className="p-6 max-w-3xl mx-auto bg-white rounded-2xl shadow-lg mt-6">
-      <h1 className="text-2xl font-bold text-green-500 mb-4">Danh sách sinh viên</h1>
+    <div className="max-w-7xl mx-auto p-4">
+      <h1 className="text-3xl font-bold text-center text-green-600 mb-6">Danh sách sinh viên</h1>
 
-      <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="flex flex-wrap justify-between mb-6">
         <input
           type="text"
           placeholder="Tìm kiếm theo tên"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="border p-2 rounded w-full"
+          className="w-full md:w-1/3 px-4 py-2 border border-gray-300 rounded-md mb-4 md:mb-0"
         />
 
         <select
           value={selectedClass}
           onChange={(e) => setSelectedClass(e.target.value)}
-          className="border p-2 rounded w-full"
+          className="w-full md:w-1/4 px-4 py-2 border border-gray-300 rounded-md mb-4 md:mb-0"
         >
           <option value="">Tất cả lớp</option>
           {classes.map(lop => (
@@ -88,14 +88,14 @@ function App() {
         </select>
       </div>
 
-      <div className="mb-6 grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         <input
           type="text"
           name="ten"
           placeholder="Họ tên"
           value={newStudent.ten}
           onChange={handleChangeNew}
-          className="border p-2 rounded"
+          className="w-full px-4 py-2 border border-gray-300 rounded-md"
         />
         <input
           type="text"
@@ -103,7 +103,7 @@ function App() {
           placeholder="Lớp"
           value={newStudent.lop}
           onChange={handleChangeNew}
-          className="border p-2 rounded"
+          className="w-full px-4 py-2 border border-gray-300 rounded-md"
         />
         <input
           type="number"
@@ -111,39 +111,44 @@ function App() {
           placeholder="Tuổi"
           value={newStudent.tuoi}
           onChange={handleChangeNew}
-          className="border p-2 rounded"
+          className="w-full px-4 py-2 border border-gray-300 rounded-md"
         />
         <button
           onClick={handleAdd}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          className="w-full md:w-auto bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition duration-200"
         >
           Thêm sinh viên
         </button>
       </div>
 
-      <table className="w-full table-auto border-collapse">
-        <thead>
-          <tr className="bg-gray-200 text-left">
-            <th className="p-3">Tên</th>
-            <th className="p-3">Lớp</th>
-            <th className="p-3">Tuổi</th>
-            <th className="p-3">Thao tác</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredStudents.map(student => (
-            <StudentItem
-              key={student.id}
-              student={student}
-              onEdit={startEdit}
-              onDelete={handleDelete}
-              isEditing={editingId === student.id}
-              onSave={saveEdit}
-              onEditChange={handleEditChange}
-            />
-          ))}
-        </tbody>
-      </table>
+      <div className="overflow-x-auto bg-white rounded-lg shadow-lg">
+
+        <table className="min-w-full table-auto">
+          <thead>
+            <tr className="px-4 py-2 text-left">
+              <th className="p-3">Tên</th>
+              <th className="p-3">Lớp</th>
+              <th className="p-3">Tuổi</th>
+              <th className="p-3">Thao tác</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredStudents.map(student => (
+              <StudentItem
+                key={student.id}
+                student={student}
+                onEdit={startEdit}
+                onDelete={handleDelete}
+                isEditing={editingId === student.id}
+                onSave={saveEdit}
+                onEditChange={handleEditChange}
+              />
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+     
     </div>
   );
 }
