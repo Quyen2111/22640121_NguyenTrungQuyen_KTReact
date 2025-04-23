@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 function App() {
+  const [search, setSearch] = useState('');
   const [students, setStudents] = useState([
     { id: 1, ten: 'Nguyễn Văn A', lop: 'CNTT1', tuoi: 20 },
     { id: 2, ten: 'Trần Thị B', lop: 'KTPM2', tuoi: 21 },
@@ -42,11 +43,22 @@ function App() {
     setEditingId(null);
   };
 
+  const filteredStudents = students.filter(student =>
+    student.ten.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <div className="p-6 max-w-3xl mx-auto bg-white rounded-2xl shadow-lg mt-6">
       <h1 className="text-2xl font-bold text-green-500 mb-4">Danh sách sinh viên</h1>
 
-      {/* Form thêm */}
+      <input
+        type="text"
+        placeholder="Tìm kiếm theo tên"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="border p-2 rounded w-full md:w-1/2 mb-4"
+      />
+
       <div className="mb-6 grid grid-cols-1 md:grid-cols-4 gap-4">
         <input
           type="text"
@@ -80,7 +92,6 @@ function App() {
         </button>
       </div>
 
-      {/* Bảng danh sách */}
       <table className="w-full table-auto border-collapse">
         <thead>
           <tr className="bg-gray-200 text-left">
@@ -91,7 +102,7 @@ function App() {
           </tr>
         </thead>
         <tbody>
-          {students.map(student => (
+          {filteredStudents.map(student => (
             <tr key={student.id} className="border-t">
               {editingId === student.id ? (
                 <>
