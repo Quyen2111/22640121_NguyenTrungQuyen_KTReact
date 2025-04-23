@@ -35,7 +35,6 @@ function App() {
     <div className="p-6 max-w-3xl mx-auto bg-white rounded-2xl shadow-lg mt-6">
       <h1 className="text-2xl font-bold text-green-500 mb-4">Danh sách sinh viên</h1>
 
-      {/* Form thêm sinh viên */}
       <div className="mb-6 grid grid-cols-1 md:grid-cols-4 gap-4">
         <input
           type="text"
@@ -69,7 +68,6 @@ function App() {
         </button>
       </div>
 
-      {/* Bảng danh sách */}
       <table className="w-full table-auto border-collapse">
         <thead>
           <tr className="bg-gray-200 text-left">
